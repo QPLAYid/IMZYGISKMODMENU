@@ -8,6 +8,7 @@ apply from: file(rootProject.file('module.gradle'))
 
 android {
     compileSdkVersion rootProject.ext.targetSdkVersion
+    ndkVersion '24.0.8215888'
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
@@ -82,6 +83,9 @@ afterEvaluate {
             from magiskDir
             archiveFileName.set(zipName)
             destinationDirectory.set(outDir)
+            doLast {
+                new File("$outDir/magisk_module_$variantLowered").deleteDir()
+            }
         }
 
         task("push${variantCapped}", type: Exec) {
